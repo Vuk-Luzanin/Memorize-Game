@@ -14,6 +14,7 @@ struct EmojiMemoryGameView: View {
         VStack {
             ScrollView {
                 cards
+                    .animation(.default, value: viewModel.cards)       // value - if that value changed, animation activates
 //                Spacer()
 //                cardCountAdjusters
             }
@@ -26,10 +27,14 @@ struct EmojiMemoryGameView: View {
     
     var cards: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0) {
-            ForEach(viewModel.cards.indices, id: \.self) { index in
-                CardView(viewModel.cards[index])
+            //id: \.self - use object itself for iterating
+            ForEach(viewModel.cards) { card in
+                CardView(card)
                     .aspectRatio(2/3, contentMode: .fit)
                     .padding(4)
+                    .onTapGesture {
+                        viewModel.choose(card)
+                    }
             }
         }
         .foregroundColor(.orange)      // for all in HStack
@@ -86,6 +91,8 @@ struct CardView: View {
         }
     }
 }
+
+
 
 struct EmojiMemoryGameView_Previews: PreviewProvider {
     static var previews: some View {
