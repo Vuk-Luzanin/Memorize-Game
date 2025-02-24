@@ -1,2 +1,3 @@
 # Memorize-Game
-Simple memory game developed using Swift programming language
+
+Memory game developed using Swift programming language.
